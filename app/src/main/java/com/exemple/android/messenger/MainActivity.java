@@ -41,13 +41,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (currentUser == null) {
-            Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
-            startActivity(welcomeIntent);
-        }
-    }
 
 }

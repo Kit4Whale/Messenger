@@ -8,12 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class WelcomeActivity extends AppCompatActivity {
 
     private Button agreeBtn;
     private TextView privacyLink;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
         agreeBtn = (Button) findViewById(R.id.agree_button);
         privacyLink = (TextView) findViewById(R.id.privacy);
+
+        mAuth = FirebaseAuth.getInstance();
 
         agreeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,4 +46,14 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
     }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if(mAuth != null) {
+//            Intent mainIntent = new Intent(WelcomeActivity.this, MainActivity.class);
+//            startActivity(mainIntent);
+//        }
+//
+//    }
 }

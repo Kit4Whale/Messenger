@@ -83,4 +83,15 @@
         android:textColor="@android:color/white"
         android:visibility="invisible" />
 
+ <Button
+     android:id="@+id/register_button"
+     android:layout_width="300dp"
+     android:layout_height="wrap_content"
+     android:text="Регистрация с email"
+     android:layout_centerHorizontal="true"
+     android:layout_alignParentBottom="true"
+     android:layout_marginBottom="50dp"
+     android:background="@color/colorPrimary"
+     android:textColor="@android:color/white" />
+
 </RelativeLayout>

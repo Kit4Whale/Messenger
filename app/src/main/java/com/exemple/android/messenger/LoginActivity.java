@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button nextButton, verificationButton;
+    private Button nextButton, verificationButton, registerButton;
     private EditText phoneInput, verificationCodeInput;
     private TextView tv2;
     private FirebaseAuth mAuth;
@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         nextButton = (Button) findViewById(R.id.login_next_button);
+        registerButton = (Button) findViewById(R.id.register_button);
         verificationButton = (Button) findViewById(R.id.login_verification_button);
         verificationCodeInput = (EditText) findViewById(R.id.login_verification_input);
         phoneInput = (EditText) findViewById(R.id.login_phone_input);
@@ -72,6 +73,16 @@ public class LoginActivity extends AppCompatActivity {
                             mCallbacks);        // OnVerificationStateChangedCallbacks
 
                 }
+            }
+        });
+
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(registerIntent);
+
             }
         });
 
