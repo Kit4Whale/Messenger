@@ -17,6 +17,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private TextView privacyLink;
 
     private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class WelcomeActivity extends AppCompatActivity {
         privacyLink = (TextView) findViewById(R.id.privacy);
 
         mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         agreeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,13 +49,13 @@ public class WelcomeActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if(mAuth != null) {
-//            Intent mainIntent = new Intent(WelcomeActivity.this, MainActivity.class);
-//            startActivity(mainIntent);
-//        }
-//
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(currentUser != null) {
+            Intent mainIntent = new Intent(WelcomeActivity.this, MainActivity.class);
+            startActivity(mainIntent);
+        }
+
+    }
 }
