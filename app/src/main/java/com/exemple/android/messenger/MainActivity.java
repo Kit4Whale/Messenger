@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
         if (item.getItemId() == R.id.menu_settings) {
+            Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(settingsIntent);
 
         }
         if (item.getItemId() == R.id.menu_logout) {
