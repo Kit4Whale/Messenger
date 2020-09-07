@@ -5,11 +5,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private TabsAccessorAdapter tabsAccessorAdapter;
     FirebaseUser currentUser;
     FirebaseAuth mAuth;
+    private DatabaseReference rootRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        rootRef = FirebaseDatabase.getInstance().getReference();
 
         toolbar = (Toolbar) findViewById(R.id.mine_page_toolbar);
         setSupportActionBar(toolbar);
@@ -80,5 +89,41 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (currentUser == null) {
+            Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+            startActivity(welcomeIntent);
+        }
+        else {
+            verifyUser();
+        }
+    }
+
+    private void verifyUser() {
+        String currentUserID = mAuth.getCurrentUser().getUid();
+
+        rootRef.child("Users").child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("name").exists()) {
+                    Toast.makeText(MainActivity.this, "Привет", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(settingsIntent);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
